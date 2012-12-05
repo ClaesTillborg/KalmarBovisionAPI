@@ -15,7 +15,6 @@ I din index.php skall följade stå:
   */
 require_once("kalmarBovisionApi/KalmarBovisionApi.php");
 
-
 /**
   * Skapa ett nytt API-objekt
   */
@@ -30,4 +29,4 @@ echo $myApi->apiDocs();
 Detta kommer ge dig din första sida med API-dokumentationerna.
 
 ## Tillägg
-SimpleTest används för testning.
+Testningen görs av [SimpleTest](http://www.simpletest.org/) som finns inkluderat i mappen.
