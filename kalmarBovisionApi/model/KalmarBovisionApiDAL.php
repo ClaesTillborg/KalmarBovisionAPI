@@ -1,13 +1,20 @@
 <?php
 namespace kalmarBovisionApi\model;
 
-require_once "model/Resident.php";
-require_once "model/Coverage.php";
+require_once(dirname(__FILE__) . "/Resident.php");
+require_once(dirname(__FILE__) . "/Filter.php");
 
 class KalmarBovisioApiDAL implements \kalmarBovisionApi\apiInterface\iKalmarBovisionApi {
 
+    private $_coverage;
 
-    function __construct() {}
+    /**
+     * Set coverage to county
+     */
+    function __construct() {
+
+        $this->_coverage = Coverage::county;
+    }
 
     /**
      * takes the url-components and return the composed url
@@ -18,11 +25,39 @@ class KalmarBovisioApiDAL implements \kalmarBovisionApi\apiInterface\iKalmarBovi
      * @return string
      */
     private function setUrl(ResidentTypeArray $residentTypeArray, $filter, $coverage) {
-        $typeString = "";
-        foreach($residentTypeArray as $type){
-            $typeString .= $type;
+
+        // Fetch the array from the object
+        $typeArray = $residentTypeArray->getTypeArray();
+        $typeString = $typeArray[0];
+
+        if(count($typeArray) > 1){
+            $typeString = "";
+            foreach($typeArray as $type){
+                if($typeArray[0] === $type) {
+                    $typeString .= "${type}";
+                } else {
+                    $typeString .= ",${type}";
+                }
+
+            }
         }
+
         return "http://bovision.se/Rss?t=${typeString}&on=${filter}&dlv=1&ea=${coverage}";
+    }
+
+    /**
+     * @param $url
+     * @return array of Resident-objects
+     */
+    private function getFeed($url) {
+        $feed = array();
+        $rss = new \DOMDocument();
+        $rss->load($url);
+
+        foreach ($rss->getElementsByTagName('item') as $node) {
+            array_push($feed, $this->createPHPObj($node));
+        };
+        return $feed;
     }
 
     /**
@@ -31,16 +66,16 @@ class KalmarBovisioApiDAL implements \kalmarBovisionApi\apiInterface\iKalmarBovi
      * @param $node
      * @return Resident $item
      */
-    private function createObj($node) {
-		$item = new Resident(
-			$node->getElementsByTagName('title')->item(0)->nodeValue,
-			$node->getElementsByTagName('link')->item(0)->nodeValue,
-			$node->getElementsByTagName('description')->item(0)->nodeValue,
-			$node->getElementsByTagName('author')->item(0)->nodeValue,
-			$node->getElementsByTagName('pubDate')->item(0)->nodeValue);
-			
-		return $item;
-	}
+    private function createPHPObj($node) {
+        $item = new Resident(
+            $node->getElementsByTagName('title')->item(0)->nodeValue,
+            $node->getElementsByTagName('link')->item(0)->nodeValue,
+            $node->getElementsByTagName('description')->item(0)->nodeValue,
+            $node->getElementsByTagName('author')->item(0)->nodeValue,
+            $node->getElementsByTagName('pubDate')->item(0)->nodeValue);
+
+        return $item;
+    }
 
     /**
      * Creates a json-object
@@ -49,37 +84,54 @@ class KalmarBovisioApiDAL implements \kalmarBovisionApi\apiInterface\iKalmarBovi
      * @return string(json-object) $item
      */
     private function createJson($node) {
-		$item = array( 
-				'title' => $node->getElementsByTagName('title')->item(0)->nodeValue,
-				'link' => $node->getElementsByTagName('link')->item(0)->nodeValue,
-				'desc' => $node->getElementsByTagName('description')->item(0)->nodeValue,
-				'author' => $node->getElementsByTagName('author')->item(0)->nodeValue,
-				'date' => $node->getElementsByTagName('pubDate')->item(0)->nodeValue,
-				);
-		return json_encode($item, JSON_FORCE_OBJECT);
-	}
+        $item = array(
+            'title' => $node->getElementsByTagName('title')->item(0)->nodeValue,
+            'link' => $node->getElementsByTagName('link')->item(0)->nodeValue,
+            'desc' => $node->getElementsByTagName('description')->item(0)->nodeValue,
+            'author' => $node->getElementsByTagName('author')->item(0)->nodeValue,
+            'date' => $node->getElementsByTagName('pubDate')->item(0)->nodeValue,
+        );
+        return json_encode($item, JSON_FORCE_OBJECT);
+    }
 
-    public function getResidents() {
+    // Registered lists
+    public function getRegisteredResidents() {
+        $url = $this->setUrl(new ResidentTypeArray(), Filter::newlyRegistered, $this->_coverage);
+        return $this->getFeed($url);
+    }
 
+    /**
+     * @param \kalmarBovisionApi\model\ResidentTypeArray $residentTypeArray
+     * @return array of Resident-objects
+     */
+    public function getRegisteredResidentsByType(ResidentTypeArray $residentTypeArray) {
+        $url = $this->setUrl($residentTypeArray, Filter::newlyRegistered, $this->_coverage);
+        return $this->getFeed($url);
     }
 
 
-	public function getResidentsByType(ResidentTypeArray $residentTypeArray) {
-		$feed = array();
-		$rss = new \DOMDocument();
+    // Changed lists
+    public function getChangedResidents() {
+        $url = $this->setUrl(new ResidentTypeArray(), Filter::registeredAndChanged, $this->_coverage);
+        return $this->getFeed($url);
+    }
 
-		$rss->load("http://bovision.se/Rss?t=${residentType}&on=Changed&dlv=1&ea=ac:880");
+    /**
+     * @param \kalmarBovisionApi\model\ResidentTypeArray $residentTypeArray
+     * @return array of Resident-objects
+     */
+    public function getChangedResidentsByType(ResidentTypeArray $residentTypeArray) {
+        $url = $this->setUrl($residentTypeArray, Filter::registeredAndChanged, $this->_coverage);
+        return $this->getFeed($url);
+    }
 
-		foreach ($rss->getElementsByTagName('item') as $node) {
-
-			$item = $this->createObj($node);
-			var_dump($item);
-			$item = $this->createJson($node);
-			var_dump($item);
-			die();
-
-			array_push($feed, $item);
-		//return $feed;
-		};
-	}
+    /**
+     * let you set the coverage of your search
+     *
+     * @param \kalmarBovisionApi\model\Coverage $coverage
+     * @return mixed
+     */
+    public function setCoverage($coverage){
+        $this->_coverage = $coverage;
+    }
 };

@@ -2,35 +2,69 @@
 namespace kalmarBovisionApi;
 
 require_once(dirname(__FILE__) . "/interface/iKalmarBovisionApi.php");
-//require_once(dirname(__FILE__) . "/model/KalmarBovisionApiDAL.php");
+require_once(dirname(__FILE__) . "/model/KalmarBovisionApiDAL.php");
+require_once(dirname(__FILE__) . "/model/ResidentType.php");
+require_once(dirname(__FILE__) . "/model/ResidentTypeArray.php");
 require_once(dirname(__FILE__) . "/model/Template.php");
-//require_once(dirname(__FILE__) . "/model/ResidentType.php");
+require_once(dirname(__FILE__) . "/model/Coverage.php");
 
-class KalmarBovisionApi implements \kalmarBovisionApi\apiInterface\iKalmarBovisionApi {
+class KalmarBovisionApi implements apiInterface\iKalmarBovisionApi {
 
     // Private fields
     private $_DAL;
     private $_template = "";
 
-	public function __construct() {
+    public function __construct() {
 
         // Create Template- and DAL-layer
-        //$this->_DAL = new \kalmarBovisionApi\model\KalmarBovisioApiDAL();
-        $this->_template = new \kalmarBovisionApi\model\Template();
+        $this->_DAL = new \kalmarBovisionApi\model\KalmarBovisioApiDAL();
+        $this->_template = new model\Template();
+    }
 
-	}
+    /**
+     * @return array of Resident-objects
+     */
+    public function getRegisteredResidents() {
+        return $this->_DAL->getRegisteredResidents();
+    }
 
-	public function getResidents() {
-		// throw new notImplementedExeption();
-	}
+    /**
+     * @return array of Resident-objects
+     */
+    public function getChangedResidents() {
+        return $this->_DAL->getChangedResidents();
+    }
 
-	public function getResidentsByType(\kalmarBovisionApi\model\ResidentTypeArray $residentTypeArray) {
-		// throw new notImplementedExeption();
-	}
+    /**
+     * @param model\ResidentTypeArray $residentTypeArray
+     * @return array of Resident-objects
+     */
+    public function getRegisteredResidentsByType(model\ResidentTypeArray $residentTypeArray) {
+        return $this->_DAL->getRegisteredResidentsByType($residentTypeArray);
+    }
 
-	public function getResidentType() {
-		// throw new notImplementedExeption();
-	}
+    /**
+     * @param model\ResidentTypeArray $residentTypeArray
+     * @return array of Resident-objects
+     */
+    public function getChangedResidentsByType(model\ResidentTypeArray $residentTypeArray) {
+        return $this->_DAL->getChangedResidentsByType($residentTypeArray);
+    }
+
+    /**
+     * @param model\Coverage $coverage
+     * @return void
+     */
+    public function setCoverage($coverage) {
+        $this->_DAL->setCoverage($coverage);
+    }
+
+    /**
+     * @return model\ResidentTypeArray
+     */
+    public function getResidentTypeArray() {
+        return new model\ResidentTypeArray();
+    }
 
     /**
      * Returns a HTML5-page with the API's documentation
@@ -42,6 +76,5 @@ class KalmarBovisionApi implements \kalmarBovisionApi\apiInterface\iKalmarBovisi
         // fetch API-docs
         $docs = $this->_template->getDocs();
         return $this->_template->createHTMLPage($docs);
-	}
-
+    }
 };

@@ -6,16 +6,17 @@ class ResidentTypeArray {
     private $_residentTypeArray;
 
     /**
-    * Initiate by setting type to all
-    */
+     * Initiate by setting type to all
+     */
     public function __construct() {
         $this->_residentTypeArray = array(ResidentType::all);
     }
 
     /**
      * @param ResidentType $residentType Enum
-    */
+     */
     public function addType($residentType) {
+
 
         if($this->isResidentType($residentType)){
             if(!in_array($residentType, $this->_residentTypeArray)) {
@@ -36,8 +37,15 @@ class ResidentTypeArray {
     }
 
     /**
-    * Check if it's a ResidentType enum
-    */
+     * Set the array to default
+     */
+    public function setToDefault() {
+        $this->addType(ResidentType::all);
+    }
+
+    /**
+     * Check if it's a ResidentType enum
+     */
     private function isResidentType($type) {
         if($type === ResidentType::all ||
             $type === ResidentType::villa ||

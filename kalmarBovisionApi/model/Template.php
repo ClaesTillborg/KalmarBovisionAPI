@@ -4,9 +4,9 @@ namespace kalmarBovisionApi\model;
 
 class Template {
 
-	function __construct() {
+    function __construct() {
 
-	}
+    }
 
     /**
      * Returns the documentation on the API
@@ -30,7 +30,7 @@ EOT;
      * @return string page with body
      */
     public function createHTMLPage($body) {
-		return <<<EOT
+        return <<<EOT
 <!DOCTYPE html>
 <html lang="sv">
 	<head>
@@ -76,5 +76,5 @@ EOT;
   </body>
 </html>
 EOT;
-	}
+    }
 }

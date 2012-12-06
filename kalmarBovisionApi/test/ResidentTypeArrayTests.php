@@ -95,7 +95,7 @@ class ResidentTypeArrayTests extends \UnitTestCase {
         $this->checkType($result, \kalmarBovisionApi\model\ResidentType::apartment);
 
         // The array count should increase by one
-        $this->assertEqual(count($result), 2, "Array count didn't increase");
+        $this->assertTrue(count($result), 2, "Array count didn't increase");
 
         // Try adding new ResidentType enum
         $this->_residentTypeArray->addType(\kalmarBovisionApi\model\ResidentType::farm);
@@ -103,7 +103,7 @@ class ResidentTypeArrayTests extends \UnitTestCase {
         $this->checkType($result, \kalmarBovisionApi\model\ResidentType::farm);
 
         // The array count should increase by one
-        $this->assertEqual(count($result), 3, "Array count didn't increase");
+        $this->assertTrue(count($result), 3, "Array count didn't increase");
 
         // Try adding ResidentType::all
         $this->_residentTypeArray->addType(\kalmarBovisionApi\model\ResidentType::all);
@@ -113,6 +113,16 @@ class ResidentTypeArrayTests extends \UnitTestCase {
         // The array should only include one ResidentType::all
         $this->assertEqual(count($result), 1, "Array didn't change to default");
 
+    }
+
+    /**
+     * Testing the clear function.
+     */
+    function testClearingTheArray() {
+
+        // Trying to set the array to default.
+        $this->_residentTypeArray->setToDefault();
+        $this->testDefaultType();
     }
 };
 ?>
