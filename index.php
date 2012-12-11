@@ -6,7 +6,7 @@
 require_once("kalmarBovisionApi/KalmarBovisionApi.php");
 
 /**
- * 2. Create an instance och the KalmarBovisionApi-class.
+ * 2. Create an instance of the KalmarBovisionApi-class.
  */
 $myApi = new \kalmarBovisionApi\KalmarBovisionApi();
 
