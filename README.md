@@ -159,8 +159,18 @@ $myApi->setCoverage(\kalmarBovisionApi\model\Coverage::city);
 ```
 
 ## Resident-objekt
+Hur sökningen än går till kommer en array med PHP-objekt att returneras.
 
+### Egenskaper
++ **title** = Boendetyp och område
++ **link** = Länk till den Bovisions sida med mer information om objektet
++ **desc** = Information som ändras mellan boendetyperna.
+++ **Gemensam information**(Adress, Antal Rum, Beskrivning, Ändrad).
+++ **Annan information**(Pris, Hyra/avgift).
++ **author** = anger vilken firma som står för
++ **date** = Publiseringsdatumet("Ändrad" i egenskapen desc är samma på de objekt som inte ändrats)
 
+### Funktioner
 
 
 ## Tillägg
