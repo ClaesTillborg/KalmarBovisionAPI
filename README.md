@@ -162,15 +162,30 @@ $myApi->setCoverage(\kalmarBovisionApi\model\Coverage::city);
 Hur sökningen än går till kommer en array med PHP-objekt att returneras.
 
 ### Egenskaper
-+ **title** = Boendetyp och område
-+ **link** = Länk till den Bovisions sida med mer information om objektet
-+ **desc** = Information som ändras mellan boendetyperna.
-++ **Gemensam information**(Adress, Antal Rum, Beskrivning, Ändrad).
-++ **Annan information**(Pris, Hyra/avgift).
-+ **author** = anger vilken firma som står för
-+ **date** = Publiseringsdatumet("Ändrad" i egenskapen desc är samma på de objekt som inte ändrats)
++ **title**(string) - Boendetyp och område
++ **link**(string) - Länk till den Bovisions sida med mer information om objektet
++ **desc**(string) - Information som ändras mellan boendetyperna.
+            + **Gemensam information**(Adress, Antal Rum, Beskrivning, Ändrad).
+            + **Annan information**(Pris, Hyra/avgift).
++ **author**(string) - anger vilken firma som står för
++ **date**(DateTime) - Publiseringsdatumet("Ändrad" i egenskapen desc är samma på de objekt som inte ändrats)
+
+Dessa egenskaper är publika och nås genom objektet.
+```php
+/**
+ * Hämtar titeln
+ */
+$title = $myResident->_title;
+```
 
 ### Funktioner
+Det finns även funktioner för att få ut egenskaperna.
+```php
+/**
+ * Hämtar titeln
+ */
+$title = $myResident->getTitle();
+```
 
 
 ## Tillägg
