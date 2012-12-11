@@ -31,18 +31,20 @@ echo $myApi->apiDocs();
 
 ## Klasser
 Det finns två enum-klasser som kommer att användas vid hämtning och filtrering av data i detta API och en Array-klass.
+
 Enum
 + Coverage
 + ResidentType
 
 Array-klass
-+ ResidentTypeArray = Array-hanterare
++ ResidentTypeArray
 
 ###Coverage(\kalmarBovisionApi\model\Coverage)
 Används för omfattningen av din sökning och innehåller alternativen:
-+ county = Kalmar län(API:et har denna som default).
-+ commune = Kalmar kommun.
-+ city = Kalmar stad.
++ county = Kalmar län(API:et har denna som default)
++ commune = Kalmar kommun
++ city = Kalmar stad
+
 ```php
 /**
  * ex. Använder stad
@@ -52,16 +54,16 @@ Används för omfattningen av din sökning och innehåller alternativen:
 
 ### ResidentType(\kalmarBovisionApi\model\ResidentType)
 Används för att välja boendetyper på din sökning och innehåller följande alternativ:
-+ all
-+ villa
-+ holidayHouse
-+ farm
-+ apartment
-+ rentedApartment
-+ sublet
-+ land
-+ parking
-+ student
++ all = alla
++ villa = villa
++ holidayHouse = fritidshus
++ farm = lantbruk
++ apartment = bostadsrätt
++ rentedApartment = hyresrätt
++ sublet = 2:a hand
++ land = tomt
++ parking = parkering/garage
++ student = studentbostad
 
 ```php
 /**
@@ -71,7 +73,7 @@ Används för att välja boendetyper på din sökning och innehåller följande 
 ```
 
 ### ResidentTypeArray
-Detta är det objekt du sparar undan dina Boendetype för din sökning. Den Instansieras från API-klassen och kommer då ha alla som default.
+Det är detta objekt du använder dig av för att sparar undan Boendetyper för din sökning. Den Instansieras från API-klassen och kommer då ha alla som default.
 
 ```php
 /**
@@ -80,18 +82,19 @@ Detta är det objekt du sparar undan dina Boendetype för din sökning. Den Inst
 $myTypeArray = $myApi->getResidentTypeArray();
 
 /**
- * ...fylls på med boendetypen studentlägenheter
+ * ...fylls på med boendetypen studentbostad och 2:a handslägenheter
  */
 $myTypeArray->addType(\kalmarBovisionApi\model\ResidentType::student);
+$myTypeArray->addType(\kalmarBovisionApi\model\ResidentType::sublet);
 ```
 Denna array kan nu fyllas på med ytterligare boendetyper eller skickas vidare
 
-OBS! Om boende typen "all" läggs till kommer array:en att tömmas och bara innehålla den typen.
+**OBS! Om boende typen "all" läggs till kommer listan att tömmas och bara innehålla den typen.**
 
-Man kan även nollställa sit objekt genom:
+Man kan även nollställa sin lista genom:
 ```php
 /**
- * Nollställer din array
+ * Sätter din array till "all"
  */
 $myTypeArray->setToDefault();
 ```
@@ -104,7 +107,7 @@ Hämtningsmetoderna kräver att detta objekt skickas in som parameter men array:
 $arraycopy = $myTypeArray->getTypeArray();
 ```
 
-OBS! denna array går inte att använda i API:ets sökningsfunktioner.
+**OBS! denna array går inte att använda i API:ets sökningsfunktioner.**
 
 ## Metoder
 Det finns två sätt att söka bostäder; efter boendetyp eller alla. Dessa sökmetoder är delade i två versioner; registrerade och en där även ändrade typer finns med.
@@ -116,6 +119,7 @@ De sökmetoder som finns att använda är:
 + getChangedResidentsByType(ResidentTypeArray)
 
 Omfattningen av din sökning kommer att vara satt på Kalmar län som default.
+
 För att ändra sökarean:
 + setCoverage(\kalmarBovisionApi\model\Coverage);
 
@@ -123,6 +127,11 @@ För att hämta den array som ska användas vid sökning:
 + getResidentTypeArray()
 
 ```php
+/**
+ * Hämtar den array-klass som används vid typbestämd sökning. Denna är satt på "all" från början.
+ */
+$myTypeArray = $myApi->getResidentTypeArray();
+
 /**
  * Hämtar en array med bara nyregistrerade boenden
  */
