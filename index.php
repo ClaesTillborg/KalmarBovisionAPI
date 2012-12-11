@@ -3,7 +3,8 @@
 /**
  * 1. Require the API to your project
  */
-require_once("kalmarBovisionApi/KalmarBovisionApi.php");
+require_once "kalmarBovisionApi/KalmarBovisionApi.php";
+
 
 /**
  * 2. Create an instance of the KalmarBovisionApi-class.

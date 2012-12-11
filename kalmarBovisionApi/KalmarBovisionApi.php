@@ -12,7 +12,7 @@ class KalmarBovisionApi implements apiInterface\iKalmarBovisionApi {
 
     // Private fields
     private $_DAL;
-    private $_template = "";
+    private $_template;
 
     public function __construct() {
 

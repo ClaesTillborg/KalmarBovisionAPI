@@ -32,18 +32,18 @@ echo $myApi->apiDocs();
 ## Klasser
 Det finns två enum-klasser som kommer att användas vid hämtning och filtrering av data i detta API och en Array-klass.
 
-Enum
+###Enum
 + Coverage
 + ResidentType
 
-Array-klass
+###Array-klass
 + ResidentTypeArray
 
 ###Coverage(\kalmarBovisionApi\model\Coverage)
 Används för omfattningen av din sökning och innehåller alternativen:
-+ county = Kalmar län(API:et har denna som default)
-+ commune = Kalmar kommun
-+ city = Kalmar stad
++ county - Kalmar län(API:et har denna som default)
++ commune - Kalmar kommun
++ city - Kalmar stad
 
 ```php
 /**
@@ -54,16 +54,16 @@ Används för omfattningen av din sökning och innehåller alternativen:
 
 ### ResidentType(\kalmarBovisionApi\model\ResidentType)
 Används för att välja boendetyper på din sökning och innehåller följande alternativ:
-+ all = alla
-+ villa = villa
-+ holidayHouse = fritidshus
-+ farm = lantbruk
-+ apartment = bostadsrätt
-+ rentedApartment = hyresrätt
-+ sublet = 2:a hand
-+ land = tomt
-+ parking = parkering/garage
-+ student = studentbostad
++ all - alla
++ villa - villa
++ holidayHouse - fritidshus
++ farm - lantbruk
++ apartment - bostadsrätt
++ rentedApartment - hyresrätt
++ sublet - 2:a hand
++ land - tomt
++ parking - parkering/garage
++ student - studentbostad
 
 ```php
 /**
@@ -165,8 +165,8 @@ Hur sökningen än går till kommer en array med PHP-objekt att returneras.
 + **title**(string) - Boendetyp och område
 + **link**(string) - Länk till den Bovisions sida med mer information om objektet
 + **desc**(string) - Information som ändras mellan boendetyperna.
-            + **Gemensam information**(Adress, Antal Rum, Beskrivning, Ändrad).
-            + **Annan information**(Pris, Hyra/avgift).
+**Gemensam information**(Adress, Antal Rum, Beskrivning, Ändrad).
+**Annan information**(Pris, Hyra/avgift).
 + **author**(string) - anger vilken firma som står för
 + **date**(DateTime) - Publiseringsdatumet("Ändrad" i egenskapen desc är samma på de objekt som inte ändrats)
 

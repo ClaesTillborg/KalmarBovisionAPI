@@ -4,9 +4,9 @@ namespace kalmarBovisionApi\model;
 
 class Template {
 
-    function __construct() {
+	function __construct() {
 
-    }
+	}
 
     /**
      * Returns the documentation on the API
@@ -30,7 +30,7 @@ EOT;
      * @return string page with body
      */
     public function createHTMLPage($body) {
-        return <<<EOT
+		return <<<EOT
 <!DOCTYPE html>
 <html lang="sv">
 	<head>
@@ -58,7 +58,7 @@ EOT;
 		<!-- Skeleton Favicons
 	  ================================================== -->
 		<link rel="icon" type="image/x-icon" href="kalmarBovisionApi/assets/img/icons/myfavicon.ico">
-		<link rel="shortcut icon" type="image/x-icon" kalmarBovisionApi/href="assets/img/icons/myfavicon.ico">
+		<link rel="shortcut icon" type="image/x-icon" href="kalmarBovisionApi/assets/img/icons/myfavicon.ico">
 		<link rel="apple-touch-icon" href="kalmarBovisionApi/assets/img/icons/my-apple-touch-icon.png">
 		<link rel="apple-touch-icon" sizes="72x72" href="kalmarBovisionApi/assets/img/icons/my-apple-touch-icon-72x72.png">
 		<link rel="apple-touch-icon" sizes="114x114" href="kalmarBovisionApi/assets/img/icons/my-apple-touch-icon-114x114.png">
@@ -76,5 +76,5 @@ EOT;
   </body>
 </html>
 EOT;
-    }
+	}
 }
