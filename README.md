@@ -19,14 +19,98 @@ require_once("kalmarBovisionApi/KalmarBovisionApi.php");
   * Skapa ett nytt API-objekt
   */
 $myApi = new \kalmarBovisionApi\KalmarBovisionApi();
+```
 
+Detta kommer ge dig din första sida med API-dokumentationerna.
+```php
 /**
   * Skriver ut en HTML-sida med API:ets dokumentation.
   */
 echo $myApi->apiDocs();
 ```
 
-Detta kommer ge dig din första sida med API-dokumentationerna.
+## Klasser
+Det finns två enum-klasser som kommer att användas vid hämtning och filtrering av data i detta API och en Array-klass.
+Enum
++ Coverage
++ ResidentType
+
+Array-klass
++ ResidentTypeArray =
+
+###Coverage(\kalmarBovisionApi\model\Coverage)
+Används för omfattningen av din sökning och innehåller alternativen:
++ county = Kalmar län(API:et har denna som default)
++ commune = Kalmar kommun
++ city = Kalmar stad
+```php
+/**
+ * ex. Använder stad
+ */
+ $myCoverage = \kalmarBovisionApi\model\Coverage::city;
+```
+
+### ResidentType(\kalmarBovisionApi\model\ResidentType)
+Används för att välja boendetyper på din sökning och innehåller följande alternativ:
++ all
++ villa
++ holidayHouse
++ farm
++ apartment
++ rentedApartment
++ sublet
++ land
++ parking
++ student
+```php
+/**
+ * Filtrerar på alla sorter
+ */
+ $myResidentType = \kalmarBovisionApi\model\ResidentType::all;
+```
+
+### ResidentTypeArray
+Detta är det objekt du sparar undan dina Boendetype för din sökning. Den Instansieras från API-klassen och kommer då ha alla som default.
+
+```php
+/**
+ * Först instansieras objektet...
+ */
+$myTypeArray = $myApi->getResidentTypeArray();
+
+/**
+ * ...fylls på med boendetypen studentlägenheter
+ */
+$myTypeArray->addType(\kalmarBovisionApi\model\ResidentType::student);
+```
+Denna array kan nu fyllas på med ytterligare boendetyper eller skickas vidare
+
+OBS! Om boende typen "all" läggs till kommer array:en att tömmas och bara innehålla den typen.
+
+Man kan även nollställa sit objekt genom:
+```php
+/**
+ * Nollställer din array
+ */
+$myTypeArray->setToDefault();
+```
+
+Hämtningsmetoderna kräver att detta objekt skickas in som parameter men array:en går att få tag i med:
+```php
+/**
+ * Hämtar din array
+ */
+$arraycopy = $myTypeArray->getTypeArray();
+```
+
+OBS! denna array går inte att använda i API:ets sökningsfunktioner.
+
+## Metoder
+
+## Resident-objekt
+
+
+
 
 ## Tillägg
 Testningen görs av [SimpleTest](http://www.simpletest.org/) som finns inkluderat i mappen.
