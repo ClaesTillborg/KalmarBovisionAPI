@@ -36,13 +36,13 @@ Enum
 + ResidentType
 
 Array-klass
-+ ResidentTypeArray =
++ ResidentTypeArray = Array-hanterare
 
 ###Coverage(\kalmarBovisionApi\model\Coverage)
 Används för omfattningen av din sökning och innehåller alternativen:
-+ county = Kalmar län(API:et har denna som default)
-+ commune = Kalmar kommun
-+ city = Kalmar stad
++ county = Kalmar län(API:et har denna som default).
++ commune = Kalmar kommun.
++ city = Kalmar stad.
 ```php
 /**
  * ex. Använder stad
@@ -62,6 +62,7 @@ Används för att välja boendetyper på din sökning och innehåller följande 
 + land
 + parking
 + student
+
 ```php
 /**
  * Filtrerar på alla sorter
@@ -106,6 +107,47 @@ $arraycopy = $myTypeArray->getTypeArray();
 OBS! denna array går inte att använda i API:ets sökningsfunktioner.
 
 ## Metoder
+Det finns två sätt att söka bostäder; efter boendetyp eller alla. Dessa sökmetoder är delade i två versioner; registrerade och en där även ändrade typer finns med.
+
+De sökmetoder som finns att använda är:
++ getRegisteredResidents()
++ getRegisteredResidentsByType(ResidentTypeArray)
++ getChangedResidents()
++ getChangedResidentsByType(ResidentTypeArray)
+
+Omfattningen av din sökning kommer att vara satt på Kalmar län som default.
+För att ändra sökarean:
++ setCoverage(\kalmarBovisionApi\model\Coverage);
+
+För att hämta den array som ska användas vid sökning:
++ getResidentTypeArray()
+
+```php
+/**
+ * Hämtar en array med bara nyregistrerade boenden
+ */
+$myApi->getRegisteredResidents();
+
+/**
+ * Gör en typbestämd sökning
+ */
+$myApi->getRegisteredResidentsByType($myTypeArray);
+
+/**
+ * Hämtar en array med både ändrade och registrerade boenden
+ */
+$myApi->getChangedResidents();
+
+/**
+ * Gör en typbestämd sökning
+ */
+$myApi->getChangedResidentsByType($myTypeArray);
+
+/**
+ * Ändrar sökarean till stad
+ */
+$myApi->setCoverage(\kalmarBovisionApi\model\Coverage::city);
+```
 
 ## Resident-objekt
 
