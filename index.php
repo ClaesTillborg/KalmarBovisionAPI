@@ -11,7 +11,6 @@ require_once "kalmarBovisionApi/KalmarBovisionApi.php";
  */
 $myApi = new \kalmarBovisionApi\KalmarBovisionApi();
 
-
 /**
  * 3. This is a function that renders the API's documentation.
  *    It is not essential to your project so change this to your

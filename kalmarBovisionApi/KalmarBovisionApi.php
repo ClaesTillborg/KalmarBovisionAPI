@@ -17,7 +17,7 @@ class KalmarBovisionApi implements apiInterface\iKalmarBovisionApi {
     public function __construct() {
 
         // Create Template- and DAL-layer
-        $this->_DAL = new \kalmarBovisionApi\model\KalmarBovisioApiDAL();
+        $this->_DAL = new \kalmarBovisionApi\model\KalmarBovisionApiDAL();
         $this->_template = new model\Template();
     }
 

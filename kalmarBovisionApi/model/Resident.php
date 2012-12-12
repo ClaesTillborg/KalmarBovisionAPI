@@ -1,7 +1,7 @@
 <?php
 namespace kalmarBovisionApi\model;
 
-require_once "../interface/iResident.php";
+require_once(dirname(__FILE__) . "/../interface/iResident.php");
 
 class Resident implements \kalmarBovisionApi\apiInterface\iResident {
 

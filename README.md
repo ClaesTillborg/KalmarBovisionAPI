@@ -6,7 +6,7 @@ KalmarBovisionAPI
 Ett API skapat i studiesyfte för kursen PHP2 på [Linneuniversitetet](http://www.lnu.se). Här kan man hämta information om olika boendetyper från Kalmar län, Kalmar kommun eller Kalmar stad. Informationen i fråga kommer från Bovisions RSS-tjänst.
 
 ## Installation
-API:et installeras genom att ladda ned samtliga filer och lägg dem i din projektmapp. Det följer en .htaccess och en index.php
+API:et installeras genom att samtliga filer laddas ned och läggs i projektmappen. Det följer en .htaccess och en index.php
 
 I din index.php skall följade stå: 
 ```php

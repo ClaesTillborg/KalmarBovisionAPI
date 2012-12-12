@@ -4,7 +4,7 @@ namespace kalmarBovisionApi\model;
 require_once(dirname(__FILE__) . "/Resident.php");
 require_once(dirname(__FILE__) . "/Filter.php");
 
-class KalmarBovisioApiDAL implements \kalmarBovisionApi\apiInterface\iKalmarBovisionApi {
+class KalmarBovisionApiDAL implements \kalmarBovisionApi\apiInterface\iKalmarBovisionApi {
 
     private $_coverage;
 
